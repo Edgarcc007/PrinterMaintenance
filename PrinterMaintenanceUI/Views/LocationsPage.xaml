@@ -1,0 +1,61 @@
+<Page x:Class="PrinterMaintenanceUI.Views.LocationsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      Background="#F5F5F5">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Add form -->
+        <materialDesign:Card Grid.Row="0" Padding="20" UniformCornerRadius="8" Margin="0,0,0,16">
+            <StackPanel>
+                <TextBlock Text="Add Location" FontSize="16" FontWeight="Medium" Margin="0,0,0,12"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="TxtName" Width="250"
+                             materialDesign:HintAssist.Hint="Location Name *"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Margin="0,0,12,0"/>
+                    <TextBox x:Name="TxtDesc" Width="350"
+                             materialDesign:HintAssist.Hint="Description"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Margin="0,0,12,0"/>
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                            Background="#00695C" BorderBrush="#00695C"
+                            Click="Add_Click" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center"/>
+                            <TextBlock Text="Add" Margin="6,0,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!-- List -->
+        <materialDesign:Card Grid.Row="1" UniformCornerRadius="8" Padding="0">
+            <DataGrid x:Name="GridLocations" Style="{StaticResource StyledDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="2*"/>
+                    <DataGridTemplateColumn Header="" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                        Width="30" Height="30" ToolTip="Delete"
+                                        Click="Delete_Click" Tag="{Binding}">
+                                    <materialDesign:PackIcon Kind="DeleteOutline" Width="16" Height="16"
+                                                              Foreground="#C62828"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </materialDesign:Card>
+    </Grid>
+</Page>

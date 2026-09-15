@@ -1,0 +1,86 @@
+<Window x:Class="PrinterMaintenanceUI.Views.Dialogs.PrinterDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Printer" Height="560" Width="480"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock x:Name="TxtTitle" Grid.Row="0" Text="Add Printer" 
+                   FontSize="20" FontWeight="Medium" Margin="0,0,0,20"
+                   Foreground="{DynamicResource MaterialDesign.Brush.Primary}"/>
+
+        <!-- Form -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBox x:Name="TxtBrand"
+                         materialDesign:HintAssist.Hint="Brand *"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                <TextBox x:Name="TxtModel"
+                         materialDesign:HintAssist.Hint="Model *"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                <TextBox x:Name="TxtSerial"
+                         materialDesign:HintAssist.Hint="Serial Number *"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                <TextBox x:Name="TxtAssetTag"
+                         materialDesign:HintAssist.Hint="Asset Tag"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                <TextBox x:Name="TxtIpAddress"
+                         materialDesign:HintAssist.Hint="IP Address"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                <ComboBox x:Name="CmbLocation"
+                          materialDesign:HintAssist.Hint="Location"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          DisplayMemberPath="Name" SelectedValuePath="Id"
+                          Margin="0,0,0,12"/>
+
+                <ComboBox x:Name="CmbStatus"
+                          materialDesign:HintAssist.Hint="Status"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                          Margin="0,0,0,12">
+                    <ComboBoxItem Content="Active" IsSelected="True"/>
+                    <ComboBoxItem Content="In Repair"/>
+                    <ComboBoxItem Content="Decommissioned"/>
+                </ComboBox>
+
+                <TextBox x:Name="TxtNotes"
+                         materialDesign:HintAssist.Hint="Notes"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         AcceptsReturn="True" TextWrapping="Wrap"
+                         MinHeight="60" MaxHeight="100"
+                         Margin="0,0,0,12"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Cancel" IsCancel="True"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Margin="0,0,8,0"/>
+            <Button Content="Save" Click="Save_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Background="#00695C" BorderBrush="#00695C"/>
+        </StackPanel>
+    </Grid>
+</Window>

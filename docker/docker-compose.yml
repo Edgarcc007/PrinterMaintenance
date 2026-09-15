@@ -1,0 +1,17 @@
+services:
+  printer-db:
+    image: postgres:16-alpine
+    container_name: printer-maintenance-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: printer_maintenance
+      POSTGRES_USER: printer_admin
+      POSTGRES_PASSWORD: Pr1nt3rM@int2026!
+    ports:
+      - "5434:5432"
+    volumes:
+      - printer_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  printer_data:
