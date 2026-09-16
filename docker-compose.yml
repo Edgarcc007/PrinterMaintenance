@@ -1,0 +1,33 @@
+﻿version: "3.8"
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: printer_maintenance
+      POSTGRES_USER: printer_admin
+      POSTGRES_PASSWORD: Printer2024!
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: ./api
+    restart: always
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://printer_admin:Printer2024!@db:5432/printer_maintenance
+
+  web:
+    build: ./web
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

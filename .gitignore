@@ -1,18 +1,8 @@
-﻿# Python
-api/.venv/
-api/__pycache__/
-**/__pycache__/
+node_modules/
+__pycache__/
 *.pyc
-
-# .NET
-PrinterMaintenanceUI/bin/
-PrinterMaintenanceUI/obj/
-
-# SQLite DB
-api/*.db
-
-# IDE
-.vs/
+.env
+*.db
+*.sqlite3
 .vscode/
-*.user
-*.suo
+*.log
