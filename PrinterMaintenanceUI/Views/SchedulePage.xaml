@@ -1,4 +1,4 @@
-<Page x:Class="PrinterMaintenanceUI.Views.SchedulePage"
+﻿<Page x:Class="PrinterMaintenanceUI.Views.SchedulePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -15,7 +15,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Toolbar -->
         <DockPanel Grid.Row="0" Margin="0,0,0,16">
             <Button DockPanel.Dock="Right" Style="{StaticResource MaterialDesignRaisedButton}"
                     Background="#00695C" BorderBrush="#00695C"
@@ -28,9 +27,9 @@
             <TextBlock x:Name="TxtCount" FontSize="12" Foreground="#9E9E9E" VerticalAlignment="Center"/>
         </DockPanel>
 
-        <!-- Schedule grid -->
         <materialDesign:Card Grid.Row="1" UniformCornerRadius="8" Padding="0">
-            <DataGrid x:Name="GridSchedules" Style="{StaticResource StyledDataGrid}">
+            <DataGrid x:Name="GridSchedules" Style="{StaticResource StyledDataGrid}"
+                      MouseDoubleClick="GridSchedules_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Printer" Binding="{Binding PrinterDisplay}" Width="*"/>
                     <DataGridTextColumn Header="Location" Binding="{Binding LocationDisplay}" Width="Auto"/>
@@ -43,6 +42,23 @@
                             <DataTemplate>
                                 <TextBlock Text="{Binding DaysRemaining}" FontWeight="SemiBold"
                                            Foreground="{Binding DaysRemaining, Converter={StaticResource DaysToColor}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="PerformMaintenance_Click"
+                                        Tag="{Binding}"
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Foreground="#00695C" FontSize="11" FontWeight="SemiBold"
+                                        Padding="8,2" Height="28"
+                                        ToolTip="Register maintenance for this schedule">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Wrench" Width="14" Height="14" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Perform" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -20,19 +20,30 @@ namespace PrinterMaintenanceUI.Views.Dialogs
         public MaintenanceDialog(List<Printer> printers, List<MaintenanceCategory> categories, MaintenanceRecord record)
         {
             InitializeComponent();
-            _isEditMode = true;
             _existingRecord = record;
+            _isEditMode = record.Id > 0;
 
             CmbPrinter.ItemsSource = printers;
             CmbCategory.ItemsSource = categories;
 
-            TxtTitle.Text = $"Edit Record #{record.Id}";
-            BtnSave.Content = "Save Changes";
-            Title = $"Edit Record #{record.Id}";
+            if (_isEditMode)
+            {
+                TxtTitle.Text = $"Edit Record #{record.Id}";
+                BtnSave.Content = "Save Changes";
+                Title = $"Edit Record #{record.Id}";
+                CmbPrinter.IsEnabled = false;
+                CmbCategory.IsEnabled = false;
+            }
+            else
+            {
+                TxtTitle.Text = "Perform Scheduled Maintenance";
+                BtnSave.Content = "Record Maintenance";
+                Title = "Perform Scheduled Maintenance";
+            }
 
             CmbPrinter.SelectedValue = record.PrinterId;
             CmbCategory.SelectedValue = record.CategoryId;
-            TxtPerformedBy.Text = record.PerformedBy;
+            TxtPerformedBy.Text = record.PerformedBy ?? "";
             TxtDuration.Text = record.DurationMinutes?.ToString() ?? "";
             TxtFindings.Text = record.Findings ?? "";
             TxtActions.Text = record.ActionsTaken ?? "";
@@ -55,9 +66,6 @@ namespace PrinterMaintenanceUI.Views.Dialogs
                     break;
                 }
             }
-
-            CmbPrinter.IsEnabled = false;
-            CmbCategory.IsEnabled = false;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
