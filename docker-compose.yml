@@ -1,4 +1,4 @@
-﻿version: "3.8"
+version: "3.8"
 
 services:
   db:
@@ -14,8 +14,6 @@ services:
   api:
     build: ./api
     restart: always
-    ports:
-      - "8001:8000"
     depends_on:
       - db
     environment:
@@ -25,7 +23,7 @@ services:
     build: ./web
     restart: always
     ports:
-      - "3000:80"
+      - "80:80"
     depends_on:
       - api
 
