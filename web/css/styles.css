@@ -463,3 +463,120 @@ tbody tr:hover { background: #F5F5F5; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .modal { width: 95%; }
 }
+
+/* ── Login Screen ─────────────────────────────── */
+#loginScreen {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg, #F5F5F5);
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--surface, #fff);
+    border-radius: 16px;
+    padding: 40px 32px 32px;
+    box-shadow: var(--shadow-lg, 0 4px 12px rgba(0,0,0,0.15));
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.login-header h1 {
+    margin: 8px 0 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text, #212121);
+}
+
+.login-header p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--text-secondary, #757575);
+}
+
+#loginForm .form-group {
+    margin-bottom: 20px;
+}
+
+#loginForm label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text, #212121);
+}
+
+#loginForm .form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borders, #E0E0E0);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+#loginForm .form-control:focus {
+    outline: none;
+    border-color: var(--primary, #00695C);
+    box-shadow: 0 0 0 3px rgba(0,105,92,0.12);
+}
+
+.login-error {
+    background: #FFF0F0;
+    color: var(--danger, #C62828);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary, #00695C);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.login-btn:hover {
+    background: var(--primary-dark, #003D33);
+}
+
+.login-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--text-secondary, #757575);
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 8px;
+    color: var(--text, #212121);
+}

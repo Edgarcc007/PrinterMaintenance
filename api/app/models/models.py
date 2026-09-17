@@ -1,4 +1,4 @@
-from sqlalchemy import (
+﻿from sqlalchemy import (
     Column, Integer, String, Text, Boolean, Date,
     DateTime, Enum as PgEnum, ForeignKey
 )
@@ -7,9 +7,17 @@ from sqlalchemy.sql import func
 from app.database import Base
 import enum
 
+
 class MaintenanceTypeEnum(str, enum.Enum):
     Preventive = "Preventive"
     Corrective = "Corrective"
+
+
+class UserRole(str, enum.Enum):
+    admin = "admin"
+    technician = "technician"
+    viewer = "viewer"
+
 
 class Location(Base):
     __tablename__ = "locations"
@@ -18,6 +26,7 @@ class Location(Base):
     description = Column(String(255))
     created_at = Column(DateTime, server_default=func.now())
     printers = relationship("Printer", back_populates="location")
+
 
 class Printer(Base):
     __tablename__ = "printers"
@@ -38,6 +47,7 @@ class Printer(Base):
     maintenance_records = relationship("MaintenanceRecord", back_populates="printer")
     schedules = relationship("MaintenanceSchedule", back_populates="printer")
 
+
 class MaintenanceCategory(Base):
     __tablename__ = "maintenance_categories"
     id = Column(Integer, primary_key=True, index=True)
@@ -49,6 +59,7 @@ class MaintenanceCategory(Base):
     applies_to = Column(String(50), default="Both")
     records = relationship("MaintenanceRecord", back_populates="category")
     schedules = relationship("MaintenanceSchedule", back_populates="category")
+
 
 class MaintenanceRecord(Base):
     __tablename__ = "maintenance_records"
@@ -68,6 +79,7 @@ class MaintenanceRecord(Base):
     printer = relationship("Printer", back_populates="maintenance_records")
     category = relationship("MaintenanceCategory", back_populates="records")
 
+
 class MaintenanceSchedule(Base):
     __tablename__ = "maintenance_schedule"
     id = Column(Integer, primary_key=True, index=True)
@@ -80,6 +92,7 @@ class MaintenanceSchedule(Base):
     created_at = Column(DateTime, server_default=func.now())
     printer = relationship("Printer", back_populates="schedules")
     category = relationship("MaintenanceCategory", back_populates="schedules")
+
 
 class Supply(Base):
     __tablename__ = "supplies"
@@ -117,3 +130,26 @@ class StockMovement(Base):
     notes = Column(Text)
     created_at = Column(DateTime, server_default=func.now())
     supply = relationship("Supply", back_populates="movements")
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False)
+    full_name = Column(String(100), nullable=False)
+    password_hash = Column(String(64), nullable=False)
+    role = Column(PgEnum(UserRole, name="user_role", create_type=False), default=UserRole.technician)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, server_default=func.now())
+    audit_logs = relationship("AuditLog", back_populates="user")
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_log"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    action = Column(String(50), nullable=False)
+    detail = Column(Text)
+    ip_address = Column(String(45))
+    created_at = Column(DateTime, server_default=func.now())
+    user = relationship("User", back_populates="audit_logs")

@@ -1,14 +1,47 @@
 const API = {
     base: 'http://10.138.96.13:8000/api',
 
+    getToken() {
+        return localStorage.getItem('auth_token');
+    },
+
+    setToken(token) {
+        localStorage.setItem('auth_token', token);
+    },
+
+    clearToken() {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('auth_user');
+    },
+
+    getUser() {
+        try { return JSON.parse(localStorage.getItem('auth_user')); }
+        catch { return null; }
+    },
+
+    setUser(user) {
+        localStorage.setItem('auth_user', JSON.stringify(user));
+    },
+
+    isAuthenticated() {
+        return !!this.getToken();
+    },
+
     async request(endpoint, options = {}) {
         const url = `${this.base}${endpoint}`;
-        const config = {
-            headers: { 'Content-Type': 'application/json' },
-            ...options
-        };
+        const headers = { 'Content-Type': 'application/json' };
+        const token = this.getToken();
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        const config = { headers, ...options };
         try {
             const res = await fetch(url, config);
+            if (res.status === 401) {
+                this.clearToken();
+                Auth.showLogin();
+                throw new Error('Session expired');
+            }
             if (res.status === 204) return true;
             if (!res.ok) {
                 const err = await res.json().catch(() => ({}));
@@ -25,6 +58,16 @@ const API = {
     post(endpoint, data) { return this.request(endpoint, { method: 'POST', body: JSON.stringify(data) }); },
     put(endpoint, data) { return this.request(endpoint, { method: 'PUT', body: JSON.stringify(data) }); },
     delete(endpoint) { return this.request(endpoint, { method: 'DELETE' }); },
+
+    // Auth
+    login(username, password) {
+        return this.request('/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, password })
+        });
+    },
+    logout() { return this.post('/auth/logout', {}); },
+    getMe() { return this.get('/auth/me'); },
 
     // Dashboard
     getStats() { return this.get('/dashboard/stats'); },
@@ -60,7 +103,7 @@ const API = {
     createSchedule(data) { return this.post('/schedules/', data); },
     deleteSchedule(id) { return this.delete(`/schedules/${id}`); },
 
-    // Stock Supplies
+    // Stock
     getSupplies(params = '') { return this.get('/stock/supplies/' + params); },
     getSupply(id) { return this.get('/stock/supplies/' + id); },
     createSupply(data) { return this.post('/stock/supplies/', data); },
