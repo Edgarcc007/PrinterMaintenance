@@ -80,3 +80,40 @@ class MaintenanceSchedule(Base):
     created_at = Column(DateTime, server_default=func.now())
     printer = relationship("Printer", back_populates="schedules")
     category = relationship("MaintenanceCategory", back_populates="schedules")
+
+class Supply(Base):
+    __tablename__ = "supplies"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(200), nullable=False)
+    category = Column(String(50), nullable=False)
+    unit = Column(String(20), default="units")
+    compatible_brand = Column(String(50))
+    compatible_model = Column(String(100))
+    part_number = Column(String(100))
+    current_stock = Column(Integer, default=0)
+    min_stock = Column(Integer, default=0)
+    max_stock = Column(Integer, default=0)
+    notes = Column(Text)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+    movements = relationship("StockMovement", back_populates="supply", cascade="all, delete-orphan")
+
+    @property
+    def stock_status(self):
+        if self.current_stock <= self.min_stock:
+            return "Low"
+        if self.max_stock > 0 and self.current_stock >= self.max_stock:
+            return "Overstock"
+        return "OK"
+
+
+class StockMovement(Base):
+    __tablename__ = "stock_movements"
+    id = Column(Integer, primary_key=True, index=True)
+    supply_id = Column(Integer, ForeignKey("supplies.id"), nullable=False)
+    movement_type = Column(String(10), nullable=False)
+    quantity = Column(Integer, nullable=False)
+    reference = Column(String(200))
+    notes = Column(Text)
+    created_at = Column(DateTime, server_default=func.now())
+    supply = relationship("Supply", back_populates="movements")

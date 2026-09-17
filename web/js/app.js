@@ -6,6 +6,7 @@
         printers: PrintersPage,
         maintenance: MaintenancePage,
         schedules: SchedulesPage,
+        stock: StockPage,
         locations: LocationsPage,
         categories: CategoriesPage
     },
@@ -38,6 +39,7 @@
             printers: 'Printers',
             maintenance: 'Maintenance History',
             schedules: 'Maintenance Schedules',
+            stock: 'Supply Stock',
             locations: 'Locations',
             categories: 'Categories'
         };
@@ -86,7 +88,7 @@
 
     toast(message, type = 'success') {
         const t = document.createElement('div');
-        t.className = `toast toast-${type}`;
+        t.className = 'toast toast-' + type;
         t.textContent = message;
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 3000);
@@ -97,7 +99,7 @@
     },
 
     empty(icon, text) {
-        return `<div class="empty-state"><span class="material-icons">${icon}</span><p>${text}</p></div>`;
+        return '<div class="empty-state"><span class="material-icons">' + icon + '</span><p>' + text + '</p></div>';
     },
 
     statusBadge(status) {
@@ -106,7 +108,7 @@
             'Preventive': 'preventive', 'Corrective': 'corrective',
             'Completed': 'completed', 'Pending': 'pending', 'In Progress': 'pending'
         };
-        return `<span class="badge badge-${map[status] || 'active'}">${status}</span>`;
+        return '<span class="badge badge-' + (map[status] || 'active') + '">' + status + '</span>';
     },
 
     daysClass(days) {

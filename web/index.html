@@ -10,7 +10,6 @@
 </head>
 <body>
     <div class="app-layout">
-        <!-- Sidebar -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="material-icons logo-icon">print</span>
@@ -28,18 +27,21 @@
                     <span class="material-icons">build</span><span>Maintenance</span></a></li>
                 <li><a href="#schedules" class="nav-link" data-page="schedules">
                     <span class="material-icons">event</span><span>Schedules</span></a></li>
+                <li><a href="#stock" class="nav-link" data-page="stock">
+                    <span class="material-icons">inventory_2</span><span>Stock</span></a></li>
                 <li><a href="#locations" class="nav-link" data-page="locations">
                     <span class="material-icons">location_on</span><span>Locations</span></a></li>
                 <li><a href="#categories" class="nav-link" data-page="categories">
                     <span class="material-icons">category</span><span>Categories</span></a></li>
             </ul>
             <div class="sidebar-footer">
-                <span class="material-icons">info</span>
-                <span>v1.0 &mdash; TCL Moka</span>
+                <div>
+                    <div style="font-size:11px;opacity:0.7;">TCL Moka Manufacturing</div>
+                    <div style="font-size:10px;opacity:0.5;">Developed by Edgar Carrasco</div>
+                </div>
             </div>
         </nav>
 
-        <!-- Main content -->
         <main class="main-content">
             <header class="topbar">
                 <button class="menu-toggle" id="menuToggle">
@@ -50,9 +52,7 @@
                     <span class="material-icons">account_circle</span>
                 </div>
             </header>
-            <div class="content-area" id="contentArea">
-                <!-- Pages render here -->
-            </div>
+            <div class="content-area" id="contentArea"></div>
         </main>
     </div>
 
@@ -76,6 +76,7 @@
     <script src="js/schedules.js"></script>
     <script src="js/locations.js"></script>
     <script src="js/categories.js"></script>
+    <script src="js/stock.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

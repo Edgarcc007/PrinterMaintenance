@@ -1,5 +1,5 @@
 const API = {
-    base: 'http://localhost:8000/api',
+    base: 'http://10.138.96.13:8000/api',
 
     async request(endpoint, options = {}) {
         const url = `${this.base}${endpoint}`;
@@ -59,4 +59,15 @@ const API = {
     getOverdueSchedules() { return this.get('/schedules/overdue'); },
     createSchedule(data) { return this.post('/schedules/', data); },
     deleteSchedule(id) { return this.delete(`/schedules/${id}`); },
+
+    // Stock Supplies
+    getSupplies(params = '') { return this.get('/stock/supplies/' + params); },
+    getSupply(id) { return this.get('/stock/supplies/' + id); },
+    createSupply(data) { return this.post('/stock/supplies/', data); },
+    updateSupply(id, data) { return this.put('/stock/supplies/' + id, data); },
+    deleteSupply(id) { return this.delete('/stock/supplies/' + id); },
+    getStockAlerts() { return this.get('/stock/alerts/'); },
+    createMovement(supplyId, data) { return this.post('/stock/supplies/' + supplyId + '/movements/', data); },
+    getMovements(supplyId) { return this.get('/stock/supplies/' + supplyId + '/movements/'); },
+    getAllMovements(limit = 10) { return this.get('/stock/movements/recent/?limit=' + limit); },
 };

@@ -1,8 +1,8 @@
-from fastapi import FastAPI
+﻿from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import Base, engine
 from app.models.models import Location, Printer, MaintenanceCategory, MaintenanceRecord, MaintenanceSchedule
-from app.routes import locations, printers, categories, maintenance, schedule, dashboard, export
+from app.routes import locations, printers, categories, maintenance, schedule, dashboard, export, stock
 
 
 Base.metadata.create_all(bind=engine)
@@ -31,6 +31,7 @@ app.include_router(categories.router)
 app.include_router(maintenance.router)
 app.include_router(schedule.router)
 app.include_router(export.router)
+app.include_router(stock.router)
 
 
 @app.get("/")
